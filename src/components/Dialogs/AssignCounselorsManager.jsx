@@ -151,7 +151,7 @@ const AsssignCounselorsManager = ({ trigger, selectedStudents }) => {
                           setIsSelectorPopUpOpen(false); // Close the popover
                         }}
                       >
-                      
+
                         {framework.full_name} {/* Display full name */}
                         <Check
                           className={cn(

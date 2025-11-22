@@ -20,7 +20,7 @@ const MainHeader = () => {
     }
   }
   useEffect(() => {
-    CheckLogin();
+    // CheckLogin();
 
   }, [])
 

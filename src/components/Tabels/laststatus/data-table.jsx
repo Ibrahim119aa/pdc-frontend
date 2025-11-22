@@ -21,7 +21,7 @@ import { Button } from "../../ui/button";
 import { Input } from "../../ui/input";
 
 import { useState } from "react";
-import AsssignCounselorsManager from "../../Dialogs/AssignCounselorsManager";
+import GiveAccess from "../../Dialogs/GiveAccess";
 import { Handshake } from "lucide-react";
 import { apiUrl } from "../../../utile/api";
 
@@ -75,6 +75,30 @@ export function DataTable({ columns, data }) {
 
           <Link to={"/Add-Last-Status"}>Add  </Link>
         </Button>
+        <GiveAccess
+          type={"add"}
+          endpoint={"/give-last-status-access"}
+          trigger={
+            <Button variant="outline" className="bg-teal-500 text-white">
+              {" "}
+              <Handshake />
+              Give Access to Manager
+            </Button>
+          }
+          selectedStudents={getSelectedRows()}
+        />
+        <GiveAccess
+          type={"remove"}
+          endpoint={"/remove-last-status-access"}
+          trigger={
+            <Button variant="outline" className="bg-teal-500 text-white">
+              {" "}
+              <Handshake />
+              Remove Access From Manager
+            </Button>
+          }
+          selectedStudents={getSelectedRows()}
+        />
       </div>
       <div className="flex items-center py-4">
         <Input

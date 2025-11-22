@@ -89,6 +89,9 @@ export function DataTable({ columns, data }) {
     if (token) {
       let a = jwtDecode(token);
       setuser(a);
+      console.log("this is user");
+      console.log(a);
+      
       console.log("This is aa bb cc user");
       console.log(a.id.id)
       console.log("This is coun");
@@ -107,16 +110,21 @@ export function DataTable({ columns, data }) {
   return (
     <div>
       <div className="w-full mt-1 flex gap-2">
-        <AsssignCounselorsManager
-          trigger={
-            <Button variant="outline" className="bg-teal-500 text-white">
-              {" "}
-              <Handshake />
-              Assigned Responsible to Manager
-            </Button>
-          }
-          selectedStudents={getSelectedRows()}
-        />
+        {
+          user.role != 2 ?
+            (
+              <AsssignCounselorsManager
+                trigger={
+                  <Button variant="outline" className="bg-teal-500 text-white">
+                    {" "}
+                    <Handshake />
+                    Assigned Responsible to Manager
+                  </Button>
+                }
+                selectedStudents={getSelectedRows()}
+              />
+            ):''
+        }
         <Button variant="outline" className="bg-teal-500 text-white">
           {" "}
 
@@ -125,14 +133,7 @@ export function DataTable({ columns, data }) {
 
       </div>
       <div className="flex items-center justify-between py-4 gap-1">
-        {/* <Input
-          placeholder="Filter by emails..."
-          value={table.getColumn("email")?.getFilterValue() || ""}
-          onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
-          }
-          className="max-w-md"
-        /> */}
+        
         <Input
           placeholder="Search by fullname or email..."
           value={
@@ -143,17 +144,7 @@ export function DataTable({ columns, data }) {
           }
           className="max-w-md"
         />
-        {/* <span>
-          <Button
-            variant="outline"
-            className="bg-teal-500 text-white"
-            onClick={handleBulkUpload}
-          >
-            {" "}
-            <Upload />
-            Bulk Upload
-          </Button>
-        </span> */}
+       
       </div>
       <div className="rounded-md border">
         <Table>
@@ -227,7 +218,7 @@ export function DataTable({ columns, data }) {
                             )}
                           </TableCell>
                         ))}
-                        
+
                       </TableRow>
                     );
                   }

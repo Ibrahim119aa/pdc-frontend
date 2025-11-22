@@ -8,7 +8,7 @@ import {
   getSortedRowModel,
   getFilteredRowModel,
 } from "@tanstack/react-table";
-
+import GiveAccess from "../../Dialogs/GiveAccess"
 import {
   Table,
   TableBody,
@@ -75,6 +75,30 @@ export function DataTable({ columns, data }) {
 
           <Link to={"/Add-Exam-Mode"}>Add  </Link>
         </Button>
+        <GiveAccess
+          type={"add"}
+          endpoint={"/give-exam-mode-access"}
+          trigger={
+            <Button variant="outline" className="bg-teal-500 text-white">
+              {" "}
+              <Handshake />
+              Give Access to Manager
+            </Button>
+          }
+          selectedStudents={getSelectedRows()}
+        />
+        <GiveAccess
+          endpoint={"/remove-exam-mode-access"}
+          type={"remove"}
+          trigger={
+            <Button variant="outline" className="bg-teal-500 text-white">
+              {" "}
+              <Handshake />
+              Remove Access From Manager
+            </Button>
+          }
+          selectedStudents={getSelectedRows()}
+        />
       </div>
       <div className="flex items-center py-4">
         <Input

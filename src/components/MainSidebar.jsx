@@ -16,103 +16,88 @@ const MainSidebar = () => {
   const location = useLocation();
   const activeTab = location.pathname;
 
-  const [sidebarLinks, setsidebarlinks] = useState([]);
+  const [sidebarLinks, setsidebarlinks] = useState([
+    {
+      title: "Students",
+      url: "/allStudents",
+      icon: SquareUserRound,
+    },
+    {
+      title: "Responsible",
+      url: "/allResponsible",
+      icon: UsersRound,
+    },
+
+    {
+      title: "Managers",
+      url: "/allManagers",
+      icon: Users,
+    },
+    {
+      title: "Last Status",
+      url: "/All-Last-Status",
+      icon: Users,
+    },
+    {
+      title: "Last Exam Mode",
+      url: "/all-Exam-Mode",
+      icon: Users,
+    },
+
+  ]);
+  // const [sidebarLinks, setsidebarlinks] = useState([]);
 
 
   let token = localStorage.getItem("token");
   const [user, setuser] = useState([]);
   const CheckLogin = () => {
+
     if (token) {
       let a = jwtDecode(token);
       setuser(a);
 
-
-
-      if (a.role == 1) {
+      if (a.role === 1) {
         setsidebarlinks([
-          {
-            title: "Students",
-            url: "/allStudents",
-            icon: SquareUserRound,
-          },
-          {
-            title: "Responsible",
-            url: "/allResponsible",
-            icon: UsersRound,
-          },
+          { title: "Students", url: "/allStudents", icon: SquareUserRound },
+          { title: "Responsible", url: "/allResponsible", icon: UsersRound },
+          { title: "Managers", url: "/allManagers", icon: Users },
+          { title: "Last Status", url: "/All-Last-Status", icon: Users },
+          { title: "Last Exam Mode", url: "/all-Exam-Mode", icon: Users },
+        ]);
+      } else if (a.role === 2) {
+        setsidebarlinks([
+          { title: "Students", url: "/allStudents", icon: SquareUserRound },
+          { title: "Responsible", url: "/allResponsible", icon: UsersRound },
+        ]);
+      } else if (a.role === 3) {
+        let links = [
+          { title: "Students", url: "/allStudents", icon: SquareUserRound },
+          { title: "Responsible", url: "/allResponsible", icon: UsersRound },
+          { title: "Managers", url: "/allManagers", icon: Users },
+        ];
 
-          {
-            title: "Managers",
-            url: "/allManagers",
-            icon: Users,
-          },
-          {
+
+        if (a.id?.lastStatus === "1") {
+          links.push({
             title: "Last Status",
             url: "/All-Last-Status",
             icon: Users,
-          },
-          {
+          });
+        }
+
+        if (a.id?.examMode === "1") {
+          links.push({
             title: "Last Exam Mode",
             url: "/all-Exam-Mode",
             icon: Users,
-          },
+          });
+        }
 
-        ]);
+        setsidebarlinks(links);
       }
-      else if (a.role == 2) {
-        setsidebarlinks([
-          {
-            title: "Students",
-            url: "/allStudents",
-            icon: SquareUserRound,
-          },
-          {
-            title: "Responsible",
-            url: "/allResponsible",
-            icon: UsersRound,
-          },
-          {
-            title: "Last Status",
-            url: "/All-Last-Status",
-            icon: Users,
-          },
-          {
-            title: "Last Exam Mode",
-            url: "/all-Exam-Mode",
-            icon: Users,
-          },
-
-
-
-
-        ]);
-      }
-      else if (a.role == 3) {
-        setsidebarlinks([
-          {
-            title: "Students",
-            url: "/allStudents",
-            icon: SquareUserRound,
-          },
-          {
-            title: "Responsible",
-            url: "/allResponsible",
-            icon: UsersRound,
-          },
-
-          {
-            title: "Managers",
-            url: "/allManagers",
-            icon: Users,
-          },
-
-
-        ]);
-      }
-
     }
     else {
-      navigator("/");
+      // navigator("/");
 
     }
   }

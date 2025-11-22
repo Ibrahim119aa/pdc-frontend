@@ -158,6 +158,31 @@ export function DataTable({ data1, columns }) {
       }
     }
   };
+  const handleFileChange1 = async (e) => {
+    const file = e.target.files[0];
+
+
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      try {
+        const response = await axios.post(`${apiUrl}/import-responsible-person`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+
+          },
+        });
+
+        toast.success(response.data);
+        location.reload();
+
+      } catch (error) {
+        console.error("Error uploading file:", error);
+        alert("Error uploading file.");
+      }
+    }
+  };
   const handleFollowUpChange = async (e) => {
     let file = e.target.files[0];
     console.log("This is file");
@@ -601,15 +626,21 @@ export function DataTable({ data1, columns }) {
           }
           selectedStudents={selectedRows}
         />
-        <AsssignStudentsCounselor
-          trigger={
-            <Button variant="outline" className="bg-teal-500 text-white">
-              <Handshake />
-              Assign Students to Responsible Person
-            </Button>
-          }
-          selectedStudents={selectedRows}
-        />
+        {
+          user.role != 2
+            ?
+            (
+              <AsssignStudentsCounselor
+                trigger={
+                  <Button variant="outline" className="bg-teal-500 text-white">
+                    <Handshake />
+                    Assign Students to Responsible Person
+                  </Button>
+                }
+                selectedStudents={selectedRows}
+              />
+            ) : ''
+        }
         <Button onClick={SendLink} variant="outline" className="bg-teal-500 text-white">
 
           Send Payment Link
@@ -644,6 +675,18 @@ export function DataTable({ data1, columns }) {
 
           <Upload />
           Bulk Import
+        </Button>
+        <Button
+          variant="outline"
+          className="bg-teal-500 text-white"
+          onClick={() => document.getElementById('excel-import1').click()}
+        >
+
+          <input type="file" style={{ display: "none" }}
+            accept=".xlsx,.csv, .xls" id='excel-import1' className='d-none' onChange={handleFileChange1} />
+
+          <Upload />
+          Bulk Import Responsible Person
         </Button>
         {
           user.role == 1 ?
